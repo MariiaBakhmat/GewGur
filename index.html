@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>n8n Webhook Chat</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    #chatBox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; background: #f9f9f9; }
+    .msg { margin-bottom: 8px; }
+    .user { color: blue; }
+    .bot { color: green; }
+    input, button { padding: 5px; }
+  </style>
+</head>
+<body>
+
+<h3>n8n Webhook Chat</h3>
+<div id="chatBox"></div>
+
+<input type="text" id="userInput" placeholder="Напиши повідомлення..." style="width: 80%;" />
+<button onclick="sendMessage()">Надіслати</button>
+
+<script>
+  const chatBox = document.getElementById("chatBox");
+
+
+  const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";  
+  const askUrl = "https://n8n.beinf.ai/webhook-test/68012dbd-61e3-47df-8cfd-1c02ebb6fff6";    
+
+  // Унікальний sessionId
+  const sessionId = localStorage.getItem("sessionId") || crypto.randomUUID();
+  localStorage.setItem("sessionId", sessionId);
+
+  // Функція додавання повідомлення в чат
+  function appendMessage(text, sender) {
+    const div = document.createElement("div");
+    div.className = "msg " + sender;
+    div.textContent = (sender === "user" ? "👤 " : "🤖 ") + text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // Завантаження історії при завантаженні сторінки
+  window.onload = async () => {
+    try {
+      const res = await fetch(historyUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId })
+      });
+      const data = await res.json();
+      if (Array.isArray(data.history) && data.history.length > 0) {
+        data.history.forEach(msg => appendMessage(msg.text, msg.sender));
+      } else {
+        appendMessage("Hi there! 👋 My name is Taluno. How can I assist you today?", "bot");
+      }
+    } catch (e) {
+      console.error("Помилка при отриманні історії", e);
+      appendMessage("Hi there! 👋 My name is Taluno. How can I assist you today?", "bot");
+    }
+  };
+
+  // Відправка повідомлення та оновлення історії
+  async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if (!message) return;
+
+    appendMessage(message, "user");
+    input.value = "";
+
+    try {
+      // Надсилаємо повідомлення агенту
+      const res = await fetch(askUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, chatInput: message })
+      });
+      const data = await res.json();
+      appendMessage(data.text || "[Немає відповіді]", "bot");
+
+      // Потім завантажуємо оновлену історію
+      const historyRes = await fetch(historyUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId })
+      });
+      const historyData = await historyRes.json();
+      if (Array.isArray(historyData.history)) {
+        chatBox.innerHTML = "";
+        historyData.history.forEach(msg => appendMessage(msg.text, msg.sender));
+      } else {
+        appendMessage("[Помилка отримання історії]", "bot");
+      }
+
+    } catch (e) {
+      appendMessage("[Помилка при надсиланні]", "bot");
+      console.error(e);
+    }
+  }
+</script>
+
+</body>
+</html>
