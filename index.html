@@ -213,8 +213,8 @@
     <div id="chat-history" class="chat-history"></div>
     <div id="loader">...</div>
     <div class="chat-input-area">
-      <input id="user-input" type="text" class="chat-input" placeholder="Напиши повідомлення..." />
-      <button id="send-button" class="action-icon-button" title="Відправити">
+      <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
+      <button id="send-button" class="action-icon-button" title="Absenden">
         <i class="fas fa-paper-plane"></i>
       </button>
     </div>
@@ -267,11 +267,11 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hi there! 👋 My name is Taluno. How can I assist you today?");
+          appendMessage("bot", "Hallo! 👋 Mein Name ist GewGur. Wie kann ich Ihnen heute helfen?");
         }
       } catch (e) {
-        console.error("Помилка при отриманні історії", e);
-        appendMessage("bot", "Hi there! 👋 My name is Taluno. How can I assist you today?");
+        console.error("memmory error", e);
+        appendMessage("bot", "Hallo! 👋 Mein Name ist GewGur. Wie kann ich Ihnen heute helfen?");
       }
     }
 
@@ -282,7 +282,7 @@
       appendMessage("user", message);
       userInput.value = "";
 
-      loader.style.display = "block";  // показати лоудер
+      loader.style.display = "block";  
 
       try {
         const res = await fetch(askUrl, {
@@ -291,12 +291,12 @@
           body: JSON.stringify({ sessionId, chatInput: message }),
         });
         const data = await res.json();
-        appendMessage("bot", data.text || "[Немає відповіді]");
+        appendMessage("bot", data.text || "[Technisches Problem. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.]");
       } catch (e) {
-        appendMessage("bot", "[Помилка при надсиланні]");
+        appendMessage("bot", "[Technisches Problem. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.]");
         console.error(e);
       } finally {
-        loader.style.display = "none";  // сховати лоудер
+        loader.style.display = "none";  
       }
     }
 
