@@ -267,11 +267,11 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hallo! 👋 Mein Name ist GewGur. Wie kann ich Ihnen heute helfen?");
+          appendMessage("bot", "Hallo! 👋 Mein Name ist GewürzGuru. Wie kann ich dir heute helfen?");
         }
       } catch (e) {
         console.error("memmory error", e);
-        appendMessage("bot", "Hallo! 👋 Mein Name ist GewGur. Wie kann ich Ihnen heute helfen?");
+        appendMessage("bot", "Hallo! 👋 Mein Name ist GewürzGuru. Wie kann ich dir heute helfen?");
       }
     }
 
@@ -291,9 +291,9 @@
           body: JSON.stringify({ sessionId, chatInput: message }),
         });
         const data = await res.json();
-        appendMessage("bot", data.text || "[Technisches Problem. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.]");
+        appendMessage("bot", data.text || "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
       } catch (e) {
-        appendMessage("bot", "[Technisches Problem. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.]");
+        appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
         console.error(e);
       } finally {
         loader.style.display = "none";  
