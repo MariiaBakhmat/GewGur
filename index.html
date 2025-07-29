@@ -48,12 +48,6 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transform-style: preserve-3d;
-      animation: fadeInScale 0.8s ease-out;
-    }
-    @keyframes fadeInScale {
-      from {opacity: 0; transform: scale(0.95) translateY(20px);}
-      to {opacity: 1; transform: scale(1) translateY(0);}
     }
     .header {
       padding: 20px 30px;
@@ -62,10 +56,7 @@
       justify-content: space-between;
       align-items: center;
       background: var(--card-bg-light);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
       border-radius: 30px 30px 0 0;
-      transform: translateZ(20px);
     }
     .header h1 {
       font-weight: 600;
@@ -79,9 +70,6 @@
       padding: 20px 30px;
       overflow-y: auto;
       scroll-behavior: smooth;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      transform: translateZ(10px);
     }
     .chat-history::-webkit-scrollbar {
       display: none;
@@ -140,17 +128,14 @@
     }
     .message-container.user .message-avatar { order: 2; }
     .message-container.agent .message-avatar { order: 1; }
+
     .chat-input-area {
       padding: 20px 30px;
       border-top: 1px solid var(--border-color);
       background: var(--card-bg-light);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-radius: 0 0 30px 30px;
       display: flex;
       gap: 15px;
       align-items: center;
-      transform: translateZ(20px);
     }
     .chat-input {
       flex-grow: 1;
@@ -161,12 +146,6 @@
       color: var(--text-color-light);
       font-size: 1rem;
       outline: none;
-      transition: all 0.2s ease-in-out;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .chat-input:focus {
-      border-color: var(--primary-accent);
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 0 10px rgba(142,142,236,0.3);
     }
     .chat-input::placeholder {
       color: var(--text-color-dark);
@@ -183,27 +162,16 @@
       cursor: pointer;
       font-size: 1.3rem;
       color: white;
-      box-shadow: 0 4px 15px rgba(142,142,236,0.4);
-      transition: all 0.2s ease-in-out;
     }
-    .action-icon-button:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(142,142,236,0.6);
-    }
-    .action-icon-button:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: 0 2px 5px rgba(142,142,236,0.2);
-    }
-    #loader {
-      font-size: 16px;
+
+    .loading-bubble {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff88;
       font-style: italic;
-      color: #ffffffcc;
-      margin-bottom: 8px;
-      padding: 0 12px;
-      text-align: left;
-      display: none;
-      font-weight: bold;
-      user-select: none; 
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      box-shadow: none;
     }
   </style>
 </head>
@@ -211,7 +179,6 @@
   <div class="aether-ui-container">
     <div class="header"><h1>GewGur Chat</h1></div>
     <div id="chat-history" class="chat-history"></div>
-    <div id="loader">......</div>
     <div class="chat-input-area">
       <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
       <button id="send-button" class="action-icon-button" title="Absenden">
@@ -222,20 +189,18 @@
 
   <script>
     const chatHistory = document.getElementById("chat-history");
-    const loader = document.getElementById("loader");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
-    const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";  
-    const askUrl = "https://n8n.beinf.ai/webhook/68012dbd-61e3-47df-8cfd-1c02ebb6fff6";   
+    const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";
+    const askUrl = "https://n8n.beinf.ai/webhook/68012dbd-61e3-47df-8cfd-1c02ebb6fff6";
 
     const sessionId = localStorage.getItem("sessionId") || crypto.randomUUID();
     localStorage.setItem("sessionId", sessionId);
 
     function appendMessage(sender, message) {
       const container = document.createElement("div");
-      container.classList.add("message-container", sender);
-      container.style.animationDelay = "0.1s";
+      container.classList.add("message-container", sender === "user" ? "user" : "agent");
 
       const avatar = document.createElement("div");
       avatar.classList.add("message-avatar");
@@ -252,8 +217,29 @@
         container.appendChild(avatar);
         container.appendChild(bubble);
       }
+
       chatHistory.appendChild(container);
       chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function showAgentLoaderMessage() {
+      const container = document.createElement("div");
+      container.classList.add("message-container", "agent");
+
+      const avatar = document.createElement("div");
+      avatar.classList.add("message-avatar");
+      avatar.textContent = "🤖";
+
+      const bubble = document.createElement("div");
+      bubble.classList.add("message-bubble", "loading-bubble");
+      bubble.textContent = ".....";
+
+      container.appendChild(avatar);
+      container.appendChild(bubble);
+      chatHistory.appendChild(container);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+
+      return container;
     }
 
     async function loadHistory() {
@@ -267,11 +253,11 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen.Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
         }
       } catch (e) {
-        console.error("memmory error", e);
-        appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen.Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+        console.error("memory error", e);
+        appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
       }
     }
 
@@ -282,7 +268,7 @@
       appendMessage("user", message);
       userInput.value = "";
 
-      loader.style.display = "block";  
+      const loaderBubble = showAgentLoaderMessage();
 
       try {
         const res = await fetch(askUrl, {
@@ -293,10 +279,10 @@
         const data = await res.json();
         appendMessage("bot", data.text || "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
       } catch (e) {
-        appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
         console.error(e);
+        appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
       } finally {
-        loader.style.display = "none";  
+        if (loaderBubble) loaderBubble.remove();
       }
     }
 
