@@ -4,72 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
   <title>Gewürz Guru Chat</title>
-
-  
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  
 
   <style>
-    html, body {
-      background: #0c0c1e;
+    * {
       margin: 0;
       padding: 0;
-    }
-
-    :root {
-      --bg-gradient-start: #1c1c3a;
-      --bg-gradient-end: #0c0c1e;
-      --card-bg-light: #003836;
-      --card-bg-dark: rgba(0, 0, 0, 0.2);
-      --border-color: #336C4D;
-      --text-color-light: #e0e0e0;
-      --text-color-dark: #b0b0b0;
-      --primary-accent: #DBC59D;
-      --secondary-accent: #a9a9ed;
-      --chat-bubble-user: #EAE0b5;
-      --chat-bubble-bot: #0a4845;
-      --text-color-user: #006663;
-      --text-color-bot: #ffffff;
-      --product-card-bg: rgba(0, 56, 54, 0.8);
-      --product-card-border: #336C4D; 
-    } 
-    
-    .top-navbar {
-      width: 100%;
-      height: 120px;
-      background: #F3E8CD;
-      border-bottom: 1px solid var(--border-color);
-      position: relative;
-      z-index: 10;
-      border-radius: 30px 30px 0 0;
-    }
-    .nav-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 0 40px;
-    }
-    .nav-logo-img {
-      height: 60px;
-      width: auto;
-      object-fit: contain;
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Lato', sans-serif;
       background: #0c0c1e;
-      color: var(--text-color-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: #e0e0e0;
       min-height: 100vh;
-      overflow: hidden;
-      margin: 0;
-      perspective: 1200px;
-      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     body::before {
@@ -78,218 +29,60 @@
       inset: 0;
       background: url("https://github.com/MariiaBakhmat/GewGur/blob/main/BG.webp?raw=true") no-repeat center center fixed;
       background-size: cover;
-      opacity: 0;
-      animation: fade-in-bg 0.30s ease-in-out forwards;
+      opacity: 1;
       z-index: -1;
     }
 
-    @keyframes fade-in-bg {
-      from { opacity: 0; transform: scale(1.015); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    .aether-ui-container {
-      position: relative;
-      z-index: 1;
-      max-width: 1000px;
-      max-height: 900px;
-      width: calc(100% - 32px);
-      height: calc(100dvh - 32px);
-      background: var(--card-bg-dark);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--border-color);
-      border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(1, 40, 39, 0.5), 0 0 40px rgba(1, 40, 39, 0.8);
+    /* Верхня панель з лого */
+    .top-navbar {
+      width: 100%;
+      height: 120px;
+      background: #F3E8CD;
+      border-bottom: 1px solid #336C4D;
       display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-top: env(safe-area-inset-top); 
-      background-clip: padding-box;
-    }
-    
-    @media(max-width:768px){.aether-ui-container {
-      position: relative;
-      z-index: 1;
-      max-width: 1000px;
-      max-height: calc(100vh - 140px);
-      width: calc(100% - 32px);
-      height: calc(100vh - 140px);
-      background: var(--card-bg-dark);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--border-color);
-      border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(1, 40, 39, 0.5), 0 0 40px rgba(1, 40, 39, 0.8);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-top: env(safe-area-inset-top); 
-      background-clip: padding-box;
-    }
-      body {
-      align-items: flex-start;
-      padding-top: 30px;
-    }}
-
-    .header {
-      padding: 20px 30px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card-bg-light);
-      border-radius: 30px 30px 0 0;
-    }
-
-    .header h1 {
-      font-family: 'Fraunces', serif; 
-      font-weight: 600;
-      font-size: 1.6rem;
-      color: var(--primary-accent);
-      text-shadow: 0 0 5px rgba(142,142,236,0.5);
-      margin: 0;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .header-btn {
-      background: var(--primary-accent);
-      color: var(--card-bg-light);
-      border: none;
-      padding: 8px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: opacity 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .header-btn:hover {
-      opacity: 0.8;
-    }
-
-  
-    .view-all-btn {
-      background: transparent;
-      color: var(--card-bg-light);
-      border: 1px solid var(--card-bg-light);
-      padding: 6px 15px;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 12px;
-      transition: all 0.2s;
-    }
-
-    .view-all-btn:hover {
-      background: var(--card-bg-light);
-      color: var(--primary-accent);
-    }
-    .product-actions {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 5px;
-    }
-
-    .action-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 12px;
-      transition: all 0.2s;
+      align-items: center;
+      padding: 0 40px;
     }
 
-    .wishlist-btn {
-      background: rgba(255,255,255,0.9);
-      color: #ff4757;
+    .nav-logo-img {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
     }
 
-    .cart-btn {
-      background: var(--primary-accent);
-      color: var(--card-bg-light);
-    }
-
-    .action-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .product-info h3 {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-color-light);
-      margin: 0 0 5px 0;
-      line-height: 1.3;
-    }
-
-    .product-price {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--primary-accent);
-      margin: 0;
-    }
-
-    /* Чат секція */
-    .chat-section {
-      flex-grow: 1;
+    /* Контейнер чату */
+    .chat-container {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      min-height: 0;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid #336C4D;
+      border-top: none;
     }
 
-    .chat-header {
-      padding: 15px 30px;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--card-bg-light);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .chat-header h2 {
-      font-family: 'Fraunces', serif;
-      font-size: 1.1rem;
-      color: var(--primary-accent);
-      margin: 0;
-    }
-
-    .chat-status {
-      font-size: 12px;
-      color: var(--text-color-dark);
-    }
-
+    /* Історія чату */
     .chat-history {
-      flex-grow: 1;
+      flex: 1;
       padding: 20px 30px;
       overflow-y: auto;
-      scroll-behavior: smooth;
       background-color: rgba(0, 102, 99, 0.7);
-      min-height: 0;
+      min-height: 400px;
     }
 
     .chat-history::-webkit-scrollbar {
       display: none;
     }
 
+    /* Повідомлення */
     .message-container {
       display: flex;
       margin-bottom: 15px;
-      align-items: flex-end;
-      position: relative;
+      align-items: flex-start;
       opacity: 0;
       transform: translateY(20px);
       animation: messageFadeIn 0.5s ease-out forwards;
@@ -299,17 +92,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .message-container.bot {
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-
     .message-container.user {
       justify-content: flex-end;
     }
 
+    .message-container.bot {
+      justify-content: flex-start;
+    }
+
     .message-bubble {
-      display: inline-block;
       max-width: 75%;
       padding: 12px 18px;
       border-radius: 20px;
@@ -317,20 +108,17 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       white-space: pre-wrap;
       word-break: break-word;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      min-width: 0;
     }
 
     .message-container.user .message-bubble {
-      background-color: var(--chat-bubble-user);
-      color: var(--text-color-user);
+      background-color: #EAE0b5;
+      color: #006663;
       border-bottom-right-radius: 5px;
     }
 
     .message-container.bot .message-bubble {
-      background-color: var(--chat-bubble-bot);
-      color: var(--text-color-bot);
+      background-color: #0a4845;
+      color: #ffffff;
       border-bottom-left-radius: 5px;
     }
 
@@ -348,26 +136,37 @@
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      display: flex;
-      margin: 0 10px 0 0;
+      margin-right: 10px;
       object-fit: cover;
+      flex-shrink: 0;
     }
 
+    .loading-bubble {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff88;
+      font-style: italic;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      box-shadow: none;
+    }
+
+    /* Поле вводу */
     .chat-input-area {
       padding: 20px 30px;
-      border-top: 1px solid var(--border-color);
-      background: var(--card-bg-light);
+      border-top: 1px solid #336C4D;
+      background: #003836;
       display: flex;
       gap: 15px;
       align-items: center;
     }
 
     .chat-input {
-      flex-grow: 1;
+      flex: 1;
       background: #EAE0B5;
       border: 0.5px solid #004240;
       border-radius: 40px;
-      padding: 8px 24px;
+      padding: 12px 24px;
       color: #004240;
       font-size: 1rem;
       outline: none;
@@ -378,44 +177,7 @@
       opacity: 0.6;
     }
 
-    .cart-icon-btn {
-      background: var(--primary-accent);
-      border: none;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 1.3rem;
-      color: #F2EBDE;
-      transition: opacity 0.2s ease;
-      position: relative;
-    }
-
-    .cart-icon-btn:hover {
-      opacity: 0.8;
-    }
-
-    .cart-counter {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ff4757;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 20px;
-    }
-
-    .action-icon-button {
+    .send-button {
       background: #C09F58;
       border: none;
       border-radius: 50%;
@@ -430,325 +192,58 @@
       transition: opacity 0.2s ease;
     }
 
-    .action-icon-button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .loading-bubble {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #ffffff88;
-      font-style: italic;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      box-shadow: none;
-      flex-grow: 0;
-      max-width: fit-content;
-      min-width: 30px;
-    }
-
-    /* Корзина збоку */
-    .cart-sidebar {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 400px;
-      height: 100vh;
-      background: var(--card-bg-light);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      transition: right 0.3s ease;
-      z-index: 9999;
-      border-left: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      box-shadow: -5px 0 20px rgba(0,0,0,0.3);
-    }
-
-    .cart-sidebar.open {
-      right: 0;
-    }
-
-    .cart-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.5);
-      z-index: 9998;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .cart-overlay.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .cart-header {
-      padding: 20px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card-bg-light);
-    }
-
-    .cart-header h3 {
-      font-family: 'Fraunces', serif;
-      font-size: 1.4rem;
-      color: var(--primary-accent);
-      margin: 0;
-    }
-
-    .close-cart {
-      background: none;
-      border: none;
-      color: var(--text-color-light);
-      font-size: 24px;
-      cursor: pointer;
-      padding: 5px;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-
-    .close-cart:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .cart-items {
-      flex-grow: 1;
-      padding: 20px;
-      overflow-y: auto;
-      background: rgba(0, 102, 99, 0.3);
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-
-    .cart-item-image {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(45deg, #006663, #004240);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .cart-item-info {
-      flex-grow: 1;
-    }
-
-    .cart-item-name {
-      font-weight: 600;
-      color: var(--text-color-light);
-      margin: 0 0 5px 0;
-      font-size: 14px;
-    }
-
-    .cart-item-price {
-      color: var(--primary-accent);
-      font-weight: 700;
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .cart-item-quantity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .quantity-btn {
-      background: var(--primary-accent);
-      border: none;
-      color: var(--card-bg-light);
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      transition: opacity 0.2s;
-    }
-
-    .quantity-btn:hover {
+    .send-button:hover {
       opacity: 0.8;
     }
 
-    .quantity-btn:disabled {
+    .send-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
 
-    .quantity-number {
-      color: var(--text-color-light);
-      font-weight: 600;
-      min-width: 30px;
-      text-align: center;
-    }
-
-    .cart-total {
-      padding: 20px;
-      border-top: 1px solid var(--border-color);
-      background: var(--card-bg-light);
-    }
-
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      color: var(--text-color-light);
-    }
-
-    .total-price {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--primary-accent);
-    }
-
-    .checkout-btn {
-      width: 100%;
-      background: var(--primary-accent);
-      color: var(--card-bg-light);
-      border: none;
-      padding: 15px;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      margin-top: 15px;
-    }
-
-    .checkout-btn:hover {
-      opacity: 0.9;
-    }
-
-    .empty-cart {
-      text-align: center;
-      color: var(--text-color-dark);
-      padding: 40px 20px;
-    }
-
-    .empty-cart i {
-      font-size: 48px;
-      margin-bottom: 15px;
-      opacity: 0.5;
-    }
-
     /* Мобільна адаптація */
-    @media(max-width:768px){
-      .header, .chat-header, .chat-input-area {
-        padding: 15px 20px;
+    @media(max-width: 768px) {
+      .top-navbar {
+        height: 80px;
+        padding: 0 20px;
+      }
+      
+      .nav-logo-img {
+        height: 40px;
       }
       
       .chat-history {
         padding: 15px 20px;
+        min-height: 300px;
       }
-
-      .header-actions {
-        gap: 8px;
+      
+      .chat-input-area {
+        padding: 15px 20px;
       }
-
-      .header-btn {
-        padding: 6px 10px;
-        font-size: 12px;
-      }
-
-      .cart-sidebar {
-        width: 100vw;
-        right: -100vw;
+      
+      .message-bubble {
+        max-width: 85%;
       }
     }
-
   </style>
 </head>
 <body>
-  
-    <div class="top-navbar">
-      <div class="nav-content">
-        <div class="nav-logo">
-          <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt= "Kräuterparadies" class="nav-logo-img">
-          </div>
-      </div>
-    </div>
-      
-  <div class="aether-ui-container">
-    <!-- Чат секція -->
-    <div class="chat-section">
-      <div class="chat-header">
-        <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true" class="message-avatar" alt="Bot Avatar">
-        <div>
-          <h2>Shopping Assistent</h2>
-          <div class="chat-status">Frag mich nach Produkten, Empfehlungen oder Hilfe bei deiner Bestellung</div>
-        </div>
-      </div>
-      
-      <div id="chat-history" class="chat-history"></div>
-      
-      <div class="chat-input-area">
-        <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
-        <button id="cart-button" class="cart-icon-btn" title="Warenkorb">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-counter" id="cart-counter" style="display: none;">0</span>
-        </button>
-        <button id="send-button" class="action-icon-button" title="Absenden">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
+  <!-- Верхня панель з лого -->
+  <div class="top-navbar">
+    <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt="Kräuterparadies" class="nav-logo-img">
   </div>
 
-  <!-- Корзина збоку -->
-  <div class="cart-overlay" id="cart-overlay"></div>
-  <div class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-      <h3>Warenkorb</h3>
-      <button class="close-cart" id="close-cart">&times;</button>
-    </div>
-    <div class="cart-items" id="cart-items">
-      <div class="empty-cart">
-        <i class="fas fa-shopping-cart"></i>
-        <p>Ihr Warenkorb ist leer</p>
-      </div>
-    </div>
-    <div class="cart-total" id="cart-total" style="display: none;">
-      <div class="total-row">
-        <span>Zwischensumme:</span>
-        <span id="subtotal">€0.00</span>
-      </div>
-      <div class="total-row">
-        <span>Versand:</span>
-        <span>Gratis</span>
-      </div>
-      <div class="total-row">
-        <span class="total-price">Gesamt:</span>
-        <span class="total-price" id="total">€0.00</span>
-      </div>
-      <button class="checkout-btn">Zur Kasse</button>
+  <!-- Контейнер чату -->
+  <div class="chat-container">
+    <!-- Історія чату -->
+    <div id="chat-history" class="chat-history"></div>
+    
+    <!-- Поле вводу -->
+    <div class="chat-input-area">
+      <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
+      <button id="send-button" class="send-button" title="Absenden">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
   </div>
 
@@ -764,7 +259,6 @@
     localStorage.setItem("sessionId", sessionId);
 
     let isWaitingForResponse = false;
-    let cartItems = []; // Масив товарів у корзині
 
     // Функція обробки markdown
     function parseMarkdown(text) {
@@ -773,97 +267,18 @@
       return text;
     }
 
-    // Функції для роботи з корзиною
-    function updateCartCounter() {
-      const counter = document.getElementById('cart-counter');
-      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-      counter.textContent = totalItems;
-      counter.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
-
-    function updateCartUI() {
-      updateCartCounter();
-      renderCartItems();
-      updateCartTotal();
-    }
-
-    function renderCartItems() {
-      const cartItemsContainer = document.getElementById('cart-items');
-      const cartTotal = document.getElementById('cart-total');
-      
-      if (cartItems.length === 0) {
-        cartItemsContainer.innerHTML = `
-          <div class="empty-cart">
-            <i class="fas fa-shopping-cart"></i>
-            <p>Ihr Warenkorb ist leer</p>
-          </div>
-        `;
-        cartTotal.style.display = 'none';
-        return;
-      }
-
-      cartTotal.style.display = 'block';
-      cartItemsContainer.innerHTML = '';
-      
-      cartItems.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-          <div class="cart-item-image">
-            <i class="${item.icon}" style="color: ${item.color}; font-size: 1.5rem;"></i>
-          </div>
-          <div class="cart-item-info">
-            <h4 class="cart-item-name">${item.name}</h4>
-            <p class="cart-item-price">${item.price}</p>
-          </div>
-          <div class="cart-item-quantity">
-            <button class="quantity-btn" onclick="decreaseQuantity(${item.id})" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
-            <span class="quantity-number">${item.quantity}</span>
-            <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
-          </div>
-        `;
-        cartItemsContainer.appendChild(cartItem);
-      });
-    }
-
-    function updateCartTotal() {
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.priceValue * item.quantity), 0);
-      document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
-      document.getElementById('total').textContent = `€${subtotal.toFixed(2)}`;
-    }
-
-    function increaseQuantity(productId) {
-      const item = cartItems.find(item => item.id === productId);
-      if (item) {
-        item.quantity++;
-        updateCartUI();
-      }
-    }
-
-    function decreaseQuantity(productId) {
-      const item = cartItems.find(item => item.id === productId);
-      if (item && item.quantity > 1) {
-        item.quantity--;
-        updateCartUI();
-      }
-    }
-
-    function openCart() {
-      document.getElementById('cart-sidebar').classList.add('open');
-      document.getElementById('cart-overlay').classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeCart() {
-      document.getElementById('cart-sidebar').classList.remove('open');
-      document.getElementById('cart-overlay').classList.remove('show');
-      document.body.style.overflow = '';
-    }
-
-    // ОРИГІНАЛЬНІ ФУНКЦІЇ ЧАТУ
     function appendMessage(sender, message) {
       const container = document.createElement("div");
       container.classList.add("message-container", sender === "user" ? "user" : "bot");
+
+      // Додаємо аватар тільки для бота
+      if (sender === "bot") {
+        const avatar = document.createElement("img");
+        avatar.classList.add("message-avatar");
+        avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+        avatar.alt = "Bot Avatar";
+        container.appendChild(avatar);
+      }
 
       const bubble = document.createElement("div");
       bubble.classList.add("message-bubble");
@@ -876,10 +291,18 @@
         bubble.textContent = message;
       }
 
-      if (sender === "bot") {
-        const avatar = document.createElement("img");
-        avatar.classList.add("message-avatar");
-        avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+      container.appendChild(bubble);
+      chatHistory.appendChild(container);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function showAgentLoaderMessage() {
+      const container = document.createElement("div");
+      container.classList.add("message-container", "bot");
+
+      const avatar = document.createElement("img");
+      avatar.classList.add("message-avatar");
+      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
       avatar.alt = "Bot Avatar";
 
       const bubble = document.createElement("div");
@@ -894,7 +317,6 @@
       return container;
     }
 
-    // ОРИГІНАЛЬНА ФУНКЦІЯ loadHistory
     async function loadHistory() {
       try {
         const res = await fetch(historyUrl, {
@@ -914,7 +336,6 @@
       }
     }
 
-    // ОРИГІНАЛЬНА ФУНКЦІЯ sendMessage
     async function sendMessage() {
       if (isWaitingForResponse) return;
       const message = userInput.value.trim();
@@ -957,39 +378,11 @@
       }
     });
 
-    // Event listeners для корзини
-    document.getElementById('cart-button').addEventListener('click', openCart);
-    document.getElementById('close-cart').addEventListener('click', closeCart);
-    document.getElementById('cart-overlay').addEventListener('click', closeCart);
-
-    // Закриття корзини по Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeCart();
-      }
-    });
-
     // Ініціалізація при завантаженні
     window.onload = function() {
-      updateCartUI();
       loadHistory();
+      userInput.focus();
     };
   </script>
 </body>
-</html>/main/Guru.png?raw=true";
-        avatar.alt = "Bot Avatar";
-        container.appendChild(avatar);
-      }
-
-      container.appendChild(bubble);
-      chatHistory.appendChild(container);
-      chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
-
-    function showAgentLoaderMessage() {
-      const container = document.createElement("div");
-      container.classList.add("message-container", "bot");
-
-      const avatar = document.createElement("img");
-      avatar.classList.add("message-avatar");
-      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob
+</html>
