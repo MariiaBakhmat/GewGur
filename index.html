@@ -131,12 +131,14 @@
     }
 
     .message-avatar {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
+      width: 52.67px;
+      height: 52.67px;
+      border-radius: 15.75px;
+      border: 1.48px solid #FFFFFF;
       margin-right: 10px;
       object-fit: cover;
       flex-shrink: 0;
+      box-shadow: 0px 1.97px 15.75px -1.97px #D8D9D8;
     }
 
     .loading-bubble {
@@ -275,7 +277,7 @@
       if (sender === "bot") {
         const avatar = document.createElement("img");
         avatar.classList.add("message-avatar");
-        avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+        avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.webp?raw=true";
         avatar.alt = "Bot Avatar";
         container.appendChild(avatar);
       }
