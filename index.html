@@ -177,28 +177,7 @@
       opacity: 0.8;
     }
 
-    /* Рекомендації */
-    .recommendations-section {
-      padding: 20px 30px;
-      background: linear-gradient(135deg, var(--primary-accent), #C09F58);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .recommendations-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .recommendations-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: var(--card-bg-light);
-      margin: 0;
-    }
-
+  
     .view-all-btn {
       background: transparent;
       color: var(--card-bg-light);
@@ -214,65 +193,6 @@
       background: var(--card-bg-light);
       color: var(--primary-accent);
     }
-
-    .products-grid {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-    }
-
-    .products-grid::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .products-grid::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-    }
-
-    .products-grid::-webkit-scrollbar-thumb {
-      background: var(--card-bg-light);
-      border-radius: 2px;
-    }
-
-    .product-card {
-      min-width: 200px;
-      background: var(--product-card-bg);
-      border: 1px solid var(--product-card-border);
-      border-radius: 15px;
-      padding: 15px;
-      position: relative;
-      backdrop-filter: blur(10px);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-
-    .product-image {
-      width: 100%;
-      height: 120px;
-      background: linear-gradient(45deg, #006663, #004240);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
     .product-actions {
       position: absolute;
       top: 10px;
@@ -780,26 +700,15 @@
   </style>
 </head>
 <body>
-  <div class="aether-ui-container">
+  
     <div class="top-navbar">
       <div class="nav-content">
         <div class="nav-logo">
-          <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp" alt= "Kräuterparadies" class="nav-logo-img">
+          <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt= "Kräuterparadies" class="nav-logo-img">
           </div>
       </div>
     </div>
       
-
-    <!-- Рекомендації -->
-    <div class="recommendations-section">
-      <div class="recommendations-header">
-        <h2 class="recommendations-title">Personalisierte Empfehlungen</h2>
-        <button class="view-all-btn">Alle anzeigen</button>
-      </div>
-      <div class="products-grid" id="products-grid">
-        <!-- Продукти будуть додані через JS -->
-      </div>
-    </div>
 
     <!-- Чат секція -->
     <div class="chat-section">
