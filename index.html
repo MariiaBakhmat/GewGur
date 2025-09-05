@@ -99,24 +99,25 @@
 
     .message-bubble {
       max-width: 75%;
-      padding: 12px 18px;
-      border-radius: 20px;
+      padding: 0;
+      border-radius: 0;
       line-height: 1.5;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: none;
       white-space: pre-wrap;
       word-break: break-word;
+      background: none !important;
     }
 
     .message-container.user .message-bubble {
-      background-color: #EAE0b5;
-      color: #006663;
-      border-bottom-right-radius: 5px;
+      background-color: transparent;
+      color: #000000;
+      border-bottom-right-radius: 0;
     }
 
     .message-container.bot .message-bubble {
       background-color: #transparent;
       color: #000000;
-      border-bottom-left-radius: 5px;
+      border-bottom-left-radius: 0;
     }
 
     .message-bubble a {
