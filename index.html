@@ -2,27 +2,43 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
   <title>Gewürz Guru Chat</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+  
+
   <style>
+    html, body {
+      background: #0c0c1e;
+      margin: 0;
+      padding: 0;
+    }
+
     :root {
       --bg-gradient-start: #1c1c3a;
       --bg-gradient-end: #0c0c1e;
-      --card-bg-light: rgba(255, 255, 255, 0.05);
+      --card-bg-light: #003836;
       --card-bg-dark: rgba(0, 0, 0, 0.2);
-      --border-color: rgba(255, 255, 255, 0.1);
+      --border-color: #336C4D;
       --text-color-light: #e0e0e0;
       --text-color-dark: #b0b0b0;
-      --primary-accent: #8e8eec;
+      --primary-accent: #DBC59D;
       --secondary-accent: #a9a9ed;
-      --chat-bubble-user: #8e8eec;
-      --chat-bubble-agent: rgba(255, 255, 255, 0.08);
+      --chat-bubble-user: #EAE0b5;
+      --chat-bubble-bot: #0a4845;
+      --text-color-user: #006663;
+      --text-color-bot: #ffffff;
+      --product-card-bg: rgba(0, 56, 54, 0.8);
+      --product-card-border: #336C4D;
     }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      font-family: 'Lato', sans-serif;
+      background: #0c0c1e;
       color: var(--text-color-light);
       display: flex;
       justify-content: center;
@@ -31,24 +47,71 @@
       overflow: hidden;
       margin: 0;
       perspective: 1200px;
+      position: relative;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("https://raw.githubusercontent.com/MariiaBakhmat/GewGur/refs/heads/main/BG%20GGAI.webp") no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0;
+      animation: fade-in-bg 0.30s ease-in-out forwards;
+      z-index: -1;
+    }
+
+    @keyframes fade-in-bg {
+      from { opacity: 0; transform: scale(1.015); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
     .aether-ui-container {
       position: relative;
       z-index: 1;
-      width: 95%;
-      max-width: 800px;
-      height: 95vh;
+      max-width: 1000px;
       max-height: 900px;
+      width: calc(100% - 32px);
+      height: calc(100dvh - 32px);
       background: var(--card-bg-dark);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid var(--border-color);
       border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 40px rgba(142,142,236,0.15);
+      box-shadow: 0 10px 30px rgba(1, 40, 39, 0.5), 0 0 40px rgba(1, 40, 39, 0.8);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-top: env(safe-area-inset-top); 
+      background-clip: padding-box;
     }
+    
+    @media(max-width:768px){.aether-ui-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      max-height: calc(100vh - 140px);
+      width: calc(100% - 32px);
+      height: calc(100vh - 140px);
+      background: var(--card-bg-dark);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(1, 40, 39, 0.5), 0 0 40px rgba(1, 40, 39, 0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-top: env(safe-area-inset-top); 
+      background-clip: padding-box;
+    }
+      body {
+      align-items: flex-start;
+      padding-top: 30px;
+    }}
+
     .header {
       padding: 20px 30px;
       border-bottom: 1px solid var(--border-color);
@@ -58,22 +121,228 @@
       background: var(--card-bg-light);
       border-radius: 30px 30px 0 0;
     }
+
     .header h1 {
+      font-family: 'Fraunces', serif; 
       font-weight: 600;
       font-size: 1.6rem;
       color: var(--primary-accent);
       text-shadow: 0 0 5px rgba(142,142,236,0.5);
       margin: 0;
     }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--primary-accent);
+      color: var(--card-bg-light);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* Рекомендації */
+    .recommendations-section {
+      padding: 20px 30px;
+      background: linear-gradient(135deg, var(--primary-accent), #C09F58);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .recommendations-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .recommendations-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--card-bg-light);
+      margin: 0;
+    }
+
+    .view-all-btn {
+      background: transparent;
+      color: var(--card-bg-light);
+      border: 1px solid var(--card-bg-light);
+      padding: 6px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .view-all-btn:hover {
+      background: var(--card-bg-light);
+      color: var(--primary-accent);
+    }
+
+    .products-grid {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .products-grid::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .products-grid::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+    }
+
+    .products-grid::-webkit-scrollbar-thumb {
+      background: var(--card-bg-light);
+      border-radius: 2px;
+    }
+
+    .product-card {
+      min-width: 200px;
+      background: var(--product-card-bg);
+      border: 1px solid var(--product-card-border);
+      border-radius: 15px;
+      padding: 15px;
+      position: relative;
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(45deg, #006663, #004240);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .product-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .wishlist-btn {
+      background: rgba(255,255,255,0.9);
+      color: #ff4757;
+    }
+
+    .cart-btn {
+      background: var(--primary-accent);
+      color: var(--card-bg-light);
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .product-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color-light);
+      margin: 0 0 5px 0;
+      line-height: 1.3;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-accent);
+      margin: 0;
+    }
+
+    /* Чат секція */
+    .chat-section {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .chat-header {
+      padding: 15px 30px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--card-bg-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-header h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      color: var(--primary-accent);
+      margin: 0;
+    }
+
+    .chat-status {
+      font-size: 12px;
+      color: var(--text-color-dark);
+    }
+
     .chat-history {
       flex-grow: 1;
       padding: 20px 30px;
       overflow-y: auto;
       scroll-behavior: smooth;
+      background-color: rgba(0, 102, 99, 0.7);
+      min-height: 0;
     }
+
     .chat-history::-webkit-scrollbar {
       display: none;
     }
+
     .message-container {
       display: flex;
       margin-bottom: 15px;
@@ -83,51 +352,64 @@
       transform: translateY(20px);
       animation: messageFadeIn 0.5s ease-out forwards;
     }
+
     @keyframes messageFadeIn {
-      to {opacity: 1; transform: translateY(0);}
+      to { opacity: 1; transform: translateY(0); }
     }
-    .message-container.agent {
+
+    .message-container.bot {
       justify-content: flex-start;
+      align-items: flex-start;
     }
+
     .message-container.user {
       justify-content: flex-end;
     }
+
     .message-bubble {
+      display: inline-block;
       max-width: 75%;
       padding: 12px 18px;
       border-radius: 20px;
       line-height: 1.5;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      position: relative;
       white-space: pre-wrap;
       word-break: break-word;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      min-width: 0;
     }
+
     .message-container.user .message-bubble {
       background-color: var(--chat-bubble-user);
-      color: white;
+      color: var(--text-color-user);
       border-bottom-right-radius: 5px;
     }
-    .message-container.agent .message-bubble {
-      background-color: var(--chat-bubble-agent);
-      color: var(--text-color-light);
+
+    .message-container.bot .message-bubble {
+      background-color: var(--chat-bubble-bot);
+      color: var(--text-color-bot);
       border-bottom-left-radius: 5px;
     }
+
+    .message-bubble a {
+      color: #FFD700;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .message-bubble a:hover {
+      color: #FFF8DC;
+    }
+
     .message-avatar {
       width: 35px;
       height: 35px;
       border-radius: 50%;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-      margin: 0 10px;
-      background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      margin: 0 10px 0 0;
+      object-fit: cover;
     }
-    .message-container.user .message-avatar { order: 2; }
-    .message-container.agent .message-avatar { order: 1; }
 
     .chat-input-area {
       padding: 20px 30px;
@@ -137,21 +419,25 @@
       gap: 15px;
       align-items: center;
     }
+
     .chat-input {
       flex-grow: 1;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 25px;
-      padding: 12px 20px;
-      color: var(--text-color-light);
+      background: #EAE0B5;
+      border: 0.5px solid #004240;
+      border-radius: 40px;
+      padding: 8px 24px;
+      color: #004240;
       font-size: 1rem;
       outline: none;
     }
+
     .chat-input::placeholder {
-      color: var(--text-color-dark);
+      color: #004240;
+      opacity: 0.6;
     }
+
     .action-icon-button {
-      background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+      background: #C09F58;
       border: none;
       border-radius: 50%;
       width: 48px;
@@ -161,7 +447,13 @@
       align-items: center;
       cursor: pointer;
       font-size: 1.3rem;
-      color: white;
+      color: #F2EBDE;
+      transition: opacity 0.2s ease;
+    }
+
+    .action-icon-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .loading-bubble {
@@ -172,18 +464,90 @@
       border-radius: 20px;
       font-size: 14px;
       box-shadow: none;
+      flex-grow: 0;
+      max-width: fit-content;
+      min-width: 30px;
     }
+
+    /* Мобільна адаптація */
+    @media(max-width:768px){
+      .header, .chat-header, .chat-input-area {
+        padding: 15px 20px;
+      }
+      
+      .recommendations-section {
+        padding: 15px 20px;
+      }
+      
+      .chat-history {
+        padding: 15px 20px;
+      }
+      
+      .products-grid {
+        gap: 10px;
+      }
+      
+      .product-card {
+        min-width: 160px;
+        padding: 12px;
+      }
+
+      .header-actions {
+        gap: 8px;
+      }
+
+      .header-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+    }
+
   </style>
 </head>
 <body>
   <div class="aether-ui-container">
-    <div class="header"><h1>Gewürz Guru Chat</h1></div>
-    <div id="chat-history" class="chat-history"></div>
-    <div class="chat-input-area">
-      <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
-      <button id="send-button" class="action-icon-button" title="Absenden">
-        <i class="fas fa-paper-plane"></i>
-      </button>
+    <!-- Header з кнопками -->
+    <div class="header">
+      <h1>Gewürz Guru Chat</h1>
+      <div class="header-actions">
+        <button class="header-btn" id="wishlist-btn">
+          <i class="fas fa-heart"></i> <span>Wishlist</span>
+        </button>
+        <button class="header-btn" id="cart-btn">
+          <i class="fas fa-shopping-cart"></i> <span>Cart</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Рекомендації -->
+    <div class="recommendations-section">
+      <div class="recommendations-header">
+        <h2 class="recommendations-title">Personalisierte Empfehlungen</h2>
+        <button class="view-all-btn">Alle anzeigen</button>
+      </div>
+      <div class="products-grid" id="products-grid">
+        <!-- Продукти будуть додані через JS -->
+      </div>
+    </div>
+
+    <!-- Чат секція -->
+    <div class="chat-section">
+      <div class="chat-header">
+        <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true" class="message-avatar" alt="Bot Avatar">
+        <div>
+          <h2>Shopping Assistent</h2>
+          <div class="chat-status">Frag mich nach Produkten, Empfehlungen oder Hilfe bei deiner Bestellung</div>
+        </div>
+      </div>
+      
+      <div id="chat-history" class="chat-history"></div>
+      
+      <div class="chat-input-area">
+        <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
+        <button id="send-button" class="action-icon-button" title="Absenden">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -191,44 +555,153 @@
     const chatHistory = document.getElementById("chat-history");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
+    const productsGrid = document.getElementById("products-grid");
 
     const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";
-    const askUrl = "https://n8n.beinf.ai/webhook/68012dbd-61e3-47df-8cfd-1c02ebb6fff6";
+    const askUrl = "https://n8n.beinf.ai/webhook/5af2b924-aedb-4d7f-828a-3858c9b1f9f6";
 
     const sessionId = localStorage.getItem("sessionId") || crypto.randomUUID();
     localStorage.setItem("sessionId", sessionId);
 
+    let isWaitingForResponse = false;
+
+    // Демо продукти (поки що статичні, потім замінити на API)
+    const demoProducts = [
+      {
+        id: 1,
+        name: "Bio Kurkuma Pulver",
+        price: "€12.99",
+        image: "🌟",
+        inWishlist: false,
+        inCart: false
+      },
+      {
+        id: 2,
+        name: "Chai Tee Mischung",
+        price: "€8.50",
+        image: "🍵",
+        inWishlist: false,
+        inCart: false
+      },
+      {
+        id: 3,
+        name: "Zimt Ceylon",
+        price: "€15.99",
+        image: "🥄",
+        inWishlist: false,
+        inCart: false
+      },
+      {
+        id: 4,
+        name: "Kardamom Grün",
+        price: "€22.00",
+        image: "🌿",
+        inWishlist: false,
+        inCart: false
+      },
+      {
+        id: 5,
+        name: "Schwarzer Pfeffer",
+        price: "€9.99",
+        image: "⚫",
+        inWishlist: false,
+        inCart: false
+      }
+    ];
+
+    // Функція обробки markdown
+    function parseMarkdown(text) {
+      // Обробляємо жирний текст **текст**
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      
+      // Обробляємо посилання [текст](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      
+      return text;
+    }
+
+    // Відображення продуктів
+    function renderProducts() {
+      productsGrid.innerHTML = '';
+      demoProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+          <div class="product-image">
+            ${product.image}
+            <div class="product-actions">
+              <button class="action-btn wishlist-btn" onclick="toggleWishlist(${product.id})" title="Zur Wunschliste hinzufügen">
+                <i class="fas fa-heart${product.inWishlist ? '' : '-o'}"></i>
+              </button>
+              <button class="action-btn cart-btn" onclick="toggleCart(${product.id})" title="In den Warenkorb">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="product-price">${product.price}</p>
+          </div>
+        `;
+        productsGrid.appendChild(productCard);
+      });
+    }
+
+    // Функції для роботи з продуктами (поки що демо, потім підключити до N8N)
+    function toggleWishlist(productId) {
+      const product = demoProducts.find(p => p.id === productId);
+      if (product) {
+        product.inWishlist = !product.inWishlist;
+        renderProducts();
+        // TODO: Тут буде виклик до N8N API для додавання/видалення з wishlist
+      }
+    }
+
+    function toggleCart(productId) {
+      const product = demoProducts.find(p => p.id === productId);
+      if (product) {
+        product.inCart = !product.inCart;
+        renderProducts();
+        // TODO: Тут буде виклик до N8N API для додавання/видалення з корзини
+      }
+    }
+
     function appendMessage(sender, message) {
       const container = document.createElement("div");
-      container.classList.add("message-container", sender === "user" ? "user" : "agent");
-
-      const avatar = document.createElement("div");
-      avatar.classList.add("message-avatar");
-      avatar.textContent = sender === "user" ? "👤" : "🤖";
+      container.classList.add("message-container", sender === "user" ? "user" : "bot");
 
       const bubble = document.createElement("div");
       bubble.classList.add("message-bubble");
-      bubble.textContent = message;
-
-      if (sender === "user") {
-        container.appendChild(bubble);
-        container.appendChild(avatar);
+      
+      // Обробляємо markdown тільки для повідомлень бота
+      if (sender === "bot") {
+        const processedMessage = parseMarkdown(message);
+        bubble.innerHTML = processedMessage;
       } else {
-        container.appendChild(avatar);
-        container.appendChild(bubble);
+        bubble.textContent = message;
       }
 
+      if (sender === "bot") {
+        const avatar = document.createElement("img");
+        avatar.classList.add("message-avatar");
+        avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+        avatar.alt = "Bot Avatar";
+        container.appendChild(avatar);
+      }
+
+      container.appendChild(bubble);
       chatHistory.appendChild(container);
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
     function showAgentLoaderMessage() {
       const container = document.createElement("div");
-      container.classList.add("message-container", "agent");
+      container.classList.add("message-container", "bot");
 
-      const avatar = document.createElement("div");
+      const avatar = document.createElement("img");
       avatar.classList.add("message-avatar");
-      avatar.textContent = "🤖";
+      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+      avatar.alt = "Bot Avatar";
 
       const bubble = document.createElement("div");
       bubble.classList.add("message-bubble", "loading-bubble");
@@ -253,17 +726,21 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen.Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
         }
       } catch (e) {
         console.error("memory error", e);
-        appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+        appendMessage("bot", "Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.");
       }
     }
 
     async function sendMessage() {
+      if (isWaitingForResponse) return;
       const message = userInput.value.trim();
       if (!message) return;
+
+      isWaitingForResponse = true;
+      sendButton.disabled = true;
 
       appendMessage("user", message);
       userInput.value = "";
@@ -283,17 +760,28 @@
         appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
       } finally {
         if (loaderBubble) loaderBubble.remove();
+        isWaitingForResponse = false;
+        sendButton.disabled = false;
+        userInput.focus();
       }
     }
 
-    sendButton.addEventListener("click", sendMessage);
+    sendButton.addEventListener("click", () => {
+      if (!isWaitingForResponse) sendMessage();
+    });
+
     userInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && !isWaitingForResponse) {
         sendMessage();
       }
     });
 
-    window.onload = loadHistory;
+    // Ініціалізація при завантаженні
+    window.onload = function() {
+      renderProducts();
+      updateHeaderCounters();
+      loadHistory();
+    };
   </script>
 </body>
 </html>
