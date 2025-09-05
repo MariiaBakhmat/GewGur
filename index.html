@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
-  <title>GewÃ¼rz Guru Chat</title>
+  <title>Gewürz Guru Chat</title>
 
   
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -665,21 +665,8 @@
         padding: 15px 20px;
       }
       
-      .recommendations-section {
-        padding: 15px 20px;
-      }
-      
       .chat-history {
         padding: 15px 20px;
-      }
-      
-      .products-grid {
-        gap: 10px;
-      }
-      
-      .product-card {
-        min-width: 160px;
-        padding: 12px;
       }
 
       .header-actions {
@@ -709,7 +696,7 @@
       </div>
     </div>
       
-
+  <div class="aether-ui-container">
     <!-- Чат секція -->
     <div class="chat-section">
       <div class="chat-header">
@@ -769,7 +756,6 @@
     const chatHistory = document.getElementById("chat-history");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
-    const productsGrid = document.getElementById("products-grid");
 
     const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";
     const askUrl = "https://n8n.beinf.ai/webhook/5af2b924-aedb-4d7f-828a-3858c9b1f9f6";
@@ -780,131 +766,11 @@
     let isWaitingForResponse = false;
     let cartItems = []; // Масив товарів у корзині
 
-    // Демо продукти з іконками FontAwesome і цінами
-    const demoProducts = [
-      {
-        id: 1,
-        name: "Bio Kurkuma Pulver",
-        price: "€12.99",
-        priceValue: 12.99,
-        icon: "fas fa-star",
-        color: "#FFD700",
-        inWishlist: false,
-        inCart: false
-      },
-      {
-        id: 2,
-        name: "Chai Tee Mischung",
-        price: "€8.50",
-        priceValue: 8.50,
-        icon: "fas fa-mug-hot",
-        color: "#D2691E",
-        inWishlist: false,
-        inCart: false
-      },
-      {
-        id: 3,
-        name: "Zimt Ceylon",
-        price: "€15.99",
-        priceValue: 15.99,
-        icon: "fas fa-utensils",
-        color: "#8B4513",
-        inWishlist: false,
-        inCart: false
-      },
-      {
-        id: 4,
-        name: "Kardamom Grün",
-        price: "€22.00",
-        priceValue: 22.00,
-        icon: "fas fa-leaf",
-        color: "#228B22",
-        inWishlist: false,
-        inCart: false
-      },
-      {
-        id: 5,
-        name: "Schwarzer Pfeffer",
-        price: "€9.99",
-        priceValue: 9.99,
-        icon: "fas fa-circle",
-        color: "#2F4F4F",
-        inWishlist: false,
-        inCart: false
-      }
-    ];
-
-    // Функція обробки markdown (з вашого робочого коду)
+    // Функція обробки markdown
     function parseMarkdown(text) {
       text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
       return text;
-    }
-
-    // Відображення продуктів з іконками
-    function renderProducts() {
-      productsGrid.innerHTML = '';
-      demoProducts.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-          <div class="product-image">
-            <i class="${product.icon}" style="color: ${product.color}; font-size: 2.5rem;"></i>
-            <div class="product-actions">
-              <button class="action-btn wishlist-btn" onclick="toggleWishlist(${product.id})" title="Zur Wunschliste hinzufügen">
-                <i class="fas fa-heart${product.inWishlist ? '' : '-o'}"></i>
-              </button>
-              <button class="action-btn cart-btn" onclick="toggleCart(${product.id})" title="In den Warenkorb">
-                <i class="fas fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-          <div class="product-info">
-            <h3>${product.name}</h3>
-            <p class="product-price">${product.price}</p>
-          </div>
-        `;
-        productsGrid.appendChild(productCard);
-      });
-    }
-
-    // Функції для роботи з продуктами
-    function toggleWishlist(productId) {
-      const product = demoProducts.find(p => p.id === productId);
-      if (product) {
-        product.inWishlist = !product.inWishlist;
-        renderProducts();
-        // TODO: Тут буде виклик до N8N API для додавання/видалення з wishlist
-      }
-    }
-
-    function toggleCart(productId) {
-      const product = demoProducts.find(p => p.id === productId);
-      if (product) {
-        const existingItem = cartItems.find(item => item.id === productId);
-        
-        if (existingItem) {
-          // Якщо товар вже є в корзині, видаляємо його
-          cartItems = cartItems.filter(item => item.id !== productId);
-          product.inCart = false;
-        } else {
-          // Додаємо новий товар до корзини
-          cartItems.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            priceValue: product.priceValue,
-            icon: product.icon,
-            color: product.color,
-            quantity: 1
-          });
-          product.inCart = true;
-        }
-        
-        renderProducts();
-        updateCartUI();
-        // TODO: Тут буде виклик до N8N API для додавання/видалення з корзини
-      }
     }
 
     // Функції для роботи з корзиною
@@ -994,7 +860,7 @@
       document.body.style.overflow = '';
     }
 
-    // ОРИГІНАЛЬНІ ФУНКЦІЇ ЧАТУ (з вашого робочого файлу index3.html)
+    // ОРИГІНАЛЬНІ ФУНКЦІЇ ЧАТУ
     function appendMessage(sender, message) {
       const container = document.createElement("div");
       container.classList.add("message-container", sender === "user" ? "user" : "bot");
@@ -1014,22 +880,6 @@
         const avatar = document.createElement("img");
         avatar.classList.add("message-avatar");
         avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
-        avatar.alt = "Bot Avatar";
-        container.appendChild(avatar);
-      }
-
-      container.appendChild(bubble);
-      chatHistory.appendChild(container);
-      chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
-
-    function showAgentLoaderMessage() {
-      const container = document.createElement("div");
-      container.classList.add("message-container", "bot");
-
-      const avatar = document.createElement("img");
-      avatar.classList.add("message-avatar");
-      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
       avatar.alt = "Bot Avatar";
 
       const bubble = document.createElement("div");
@@ -1044,7 +894,7 @@
       return container;
     }
 
-    // ОРИГІНАЛЬНА ФУНКЦІЯ loadHistory (з робочого коду)
+    // ОРИГІНАЛЬНА ФУНКЦІЯ loadHistory
     async function loadHistory() {
       try {
         const res = await fetch(historyUrl, {
@@ -1056,15 +906,15 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hey! Ich bin der GewÃ¼rz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte GewÃ¼rz zu finden!");
+          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
         }
       } catch (e) {
         console.error("memory error", e);
-        appendMessage("bot", "Hey! Ich bin der GewÃ¼rz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte GewÃ¼rz zu finden!");
+        appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
       }
     }
 
-    // ОРИГІНАЛЬНА ФУНКЦІЯ sendMessage (з робочого коду)
+    // ОРИГІНАЛЬНА ФУНКЦІЯ sendMessage
     async function sendMessage() {
       if (isWaitingForResponse) return;
       const message = userInput.value.trim();
@@ -1121,10 +971,25 @@
 
     // Ініціалізація при завантаженні
     window.onload = function() {
-      renderProducts();
       updateCartUI();
       loadHistory();
     };
   </script>
 </body>
-</html>
+</html>/main/Guru.png?raw=true";
+        avatar.alt = "Bot Avatar";
+        container.appendChild(avatar);
+      }
+
+      container.appendChild(bubble);
+      chatHistory.appendChild(container);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function showAgentLoaderMessage() {
+      const container = document.createElement("div");
+      container.classList.add("message-container", "bot");
+
+      const avatar = document.createElement("img");
+      avatar.classList.add("message-avatar");
+      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob
