@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
-  <title>Gewürz Guru Chat</title>
+  <title>GewÃ¼rz Guru Chat</title>
 
   
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -508,7 +508,7 @@
   <div class="aether-ui-container">
     <!-- Header з кнопками -->
     <div class="header">
-      <h1>Gewürz Guru Chat</h1>
+      <h1>GewÃ¼rz Guru Chat</h1>
       <div class="header-actions">
         <button class="header-btn" id="wishlist-btn">
           <i class="fas fa-heart"></i> <span>Wishlist</span>
@@ -729,11 +729,11 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen.Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+          appendMessage("bot", "Hey! Ich bin der GewÃ¼rz Guru â€" dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte GewÃ¼rz zu finden!");
         }
       } catch (e) {
         console.error("memory error", e);
-        appendMessage("bot", "Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.");
+        appendMessage("bot", "Hey! Ich bin der GewÃ¼rz Guru â€" dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte GewÃ¼rz zu finden!");
       }
     }
 
@@ -758,10 +758,10 @@
           body: JSON.stringify({ sessionId, chatInput: message }),
         });
         const data = await res.json();
-        appendMessage("bot", data.text || "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
+        appendMessage("bot", data.text || "[Hoppla, da ist etwas schiefgelaufen...]");
       } catch (e) {
         console.error(e);
-        appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen. Bitte versuche es später erneut oder wende dich an den Support.]");
+        appendMessage("bot", "[Hoppla, da ist etwas schiefgelaufen...]");
       } finally {
         if (loaderBubble) loaderBubble.remove();
         isWaitingForResponse = false;
@@ -780,9 +780,22 @@
       }
     });
 
+    // Event listeners для корзини
+    document.getElementById('cart-button').addEventListener('click', openCart);
+    document.getElementById('close-cart').addEventListener('click', closeCart);
+    document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+    // Закриття корзини по Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCart();
+      }
+    });
+
     // Ініціалізація при завантаженні
     window.onload = function() {
       renderProducts();
+      updateCartUI();
       loadHistory();
     };
   </script>
