@@ -565,13 +565,14 @@
 
     let isWaitingForResponse = false;
 
-    // Демо продукти (поки що статичні, потім замінити на API)
+    // Демо продукти з іконками FontAwesome
     const demoProducts = [
       {
         id: 1,
         name: "Bio Kurkuma Pulver",
         price: "€12.99",
-        image: "🌟",
+        icon: "fas fa-star",
+        color: "#FFD700",
         inWishlist: false,
         inCart: false
       },
@@ -579,7 +580,8 @@
         id: 2,
         name: "Chai Tee Mischung",
         price: "€8.50",
-        image: "🍵",
+        icon: "fas fa-mug-hot",
+        color: "#D2691E",
         inWishlist: false,
         inCart: false
       },
@@ -587,7 +589,8 @@
         id: 3,
         name: "Zimt Ceylon",
         price: "€15.99",
-        image: "🥄",
+        icon: "fas fa-utensils",
+        color: "#8B4513",
         inWishlist: false,
         inCart: false
       },
@@ -595,7 +598,8 @@
         id: 4,
         name: "Kardamom Grün",
         price: "€22.00",
-        image: "🌿",
+        icon: "fas fa-leaf",
+        color: "#228B22",
         inWishlist: false,
         inCart: false
       },
@@ -603,24 +607,21 @@
         id: 5,
         name: "Schwarzer Pfeffer",
         price: "€9.99",
-        image: "⚫",
+        icon: "fas fa-circle",
+        color: "#2F4F4F",
         inWishlist: false,
         inCart: false
       }
     ];
 
-    // Функція обробки markdown
+    // Функція обробки markdown (з вашого робочого коду)
     function parseMarkdown(text) {
-      // Обробляємо жирний текст **текст**
       text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      
-      // Обробляємо посилання [текст](url)
       text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-      
       return text;
     }
 
-    // Відображення продуктів
+    // Відображення продуктів з іконками
     function renderProducts() {
       productsGrid.innerHTML = '';
       demoProducts.forEach(product => {
@@ -628,7 +629,7 @@
         productCard.className = 'product-card';
         productCard.innerHTML = `
           <div class="product-image">
-            ${product.image}
+            <i class="${product.icon}" style="color: ${product.color}; font-size: 2.5rem;"></i>
             <div class="product-actions">
               <button class="action-btn wishlist-btn" onclick="toggleWishlist(${product.id})" title="Zur Wunschliste hinzufügen">
                 <i class="fas fa-heart${product.inWishlist ? '' : '-o'}"></i>
@@ -647,7 +648,7 @@
       });
     }
 
-    // Функції для роботи з продуктами (поки що демо, потім підключити до N8N)
+    // Функції для роботи з продуктами
     function toggleWishlist(productId) {
       const product = demoProducts.find(p => p.id === productId);
       if (product) {
@@ -666,6 +667,7 @@
       }
     }
 
+    // ОРИГІНАЛЬНІ ФУНКЦІЇ ЧАТУ (з вашого робочого файлу index.html)
     function appendMessage(sender, message) {
       const container = document.createElement("div");
       container.classList.add("message-container", sender === "user" ? "user" : "bot");
@@ -715,6 +717,7 @@
       return container;
     }
 
+    // ОРИГІНАЛЬНА ФУНКЦІЯ loadHistory (з робочого коду)
     async function loadHistory() {
       try {
         const res = await fetch(historyUrl, {
@@ -734,6 +737,7 @@
       }
     }
 
+    // ОРИГІНАЛЬНА ФУНКЦІЯ sendMessage (з робочого коду)
     async function sendMessage() {
       if (isWaitingForResponse) return;
       const message = userInput.value.trim();
@@ -779,7 +783,6 @@
     // Ініціалізація при завантаженні
     window.onload = function() {
       renderProducts();
-      updateHeaderCounters();
       loadHistory();
     };
   </script>
