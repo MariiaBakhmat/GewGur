@@ -231,7 +231,6 @@
       transition: background-color 0.2s ease;
     }
 
-
     .icons-row {
       display: flex;
       gap: 12px;
@@ -247,13 +246,30 @@
       transition: filter 0.2s ease;
     }
 
-    .icon-button:hover .icon-img {
+    #signin-button:hover .icon-img{
       content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Account_Hover.webp?raw=true');
     }
 
-    .icon-button.active .icon-img {
+    #signin-button.active .icon-img {
       content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Account_Active.webp?raw=true');
     }
+
+    #wishlist-button:hover .icon-img {
+      content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Wishlist_hover.webp?raw=true');
+    }
+
+    #wishlist-button.active .icon-img {
+      content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Wishlist_active.webp?raw=true');
+    }
+
+    #cart-button:hover .icon-img {
+      content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Curt_hover.webp?raw=true');
+    }
+
+    #cart-button.active .icon-img {
+      content: url('https://github.com/MariiaBakhmat/GewGur/blob/main/Curt_active.webp?raw=true');
+    }
+    
 
     .icon-button::after {
       content: attr(data-tooltip);
@@ -307,13 +323,14 @@
     .modal-overlay {
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
-      bottom: 120px;
+      left: 48%;
+      transform: translateX(-50%);
+      width: 792px;
+      bottom: 140px;
+      justify-content: center;
       background: #FAFBF9;
       z-index: 100;
       display: none;
-      justify-content: center;
       align-items: flex-start;
     }
 
@@ -321,7 +338,6 @@
       display: flex;
     }
 
-   
     .signup-modal {
       width: 995px;
       height: 450px;
@@ -335,17 +351,24 @@
       margin-top: -50px;
     }
 
+    .modal-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; 
+      margin-bottom: 20px;
+    }
+
     .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+      position: static;
       background: none;
-      border: none;
-      font-size: 24px;
-      color: #666;
+      border: 2px solid #FFFFFF;
+      border-radius: 50%;
+      font-size: 18px;
+      color: #006663;
       cursor: pointer;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -353,6 +376,7 @@
 
     .modal-close:hover {
       color: #000;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .signup-title {
@@ -417,6 +441,7 @@
       align-items: center;
       gap: 5px;
     }
+
     .password-toggle::before {
       content: '';
       background-image: url('https://github.com/MariiaBakhmat/GewGur/blob/main/icon_eye.webp?raw=true');
@@ -425,7 +450,6 @@
       width: 16px;
       height: 16px;
     }
-
 
     .checkbox-group {
       display: flex;
@@ -478,13 +502,332 @@
       text-decoration: underline;
     }
 
-    .bottom-question {
-      margin-top: auto;
-      text-align: center;
+    /* Приховані елементи для Sign In режиму */
+    .form-group.hidden {
+      display: none !important;
+    }
+
+    .checkbox-group.hidden {
+      display: none !important;
+    }
+
+    /* Wishlist Modal Styles */
+    .wishlist-modal {
+      width: 792px;
+      height: 680px;
+      background: #FAFBF9;
+      border-radius: 20px;
+      position: relative;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -65px;
+      overflow-y: auto;
+    }
+
+    .wishlist-overlay {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      bottom: 200px;
+      background: #FAFBF9;
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .wishlist-overlay.active {
+      display: flex;
+    }
+
+    .wishlist-modal::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    .wishlist-title {
+      font-family: 'Fraunces', serif;
+      align-self: flex-start; 
+      font-size: 36px;
+      font-weight: 600;
+      color: #006664;
+      text-align: left;
+      margin-bottom: -5px;
+      width: 100%;
+    }
+
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 792px;
+    }
+
+    .product-card {
+      width: 180px;
+      height: 190px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      position: relative;
+    }
+
+    .product-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #FFFFFF;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: #F0F0F0;
+    }
+
+    .heart-btn {
+      color: #006664;
+    }
+
+    .cart-btn {
+      color: #006664;
+    }
+
+    .product-info {
+      padding: 12px;
+      position: relative; 
+    }
+
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #006664;
+      margin-bottom: 4px;
+    }
+
+    .product-weight {
       font-size: 14px;
       color: #999;
-      padding: 20px 0;
+      margin-bottom: 8px;
     }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #006664;
+      margin-bottom: 4px;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: flex-start;
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+    }
+
+    .star {
+      color: #FFD700;
+      font-size: 14px;
+    }
+
+    .rating-number {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Cart Modal Styles */
+    .cart-overlay {
+      position: absolute;
+      top: 0;
+      left: 48%;
+      transform: translateX(-50%);
+      width: 792px;
+      bottom: 120px;
+      justify-content: center;
+      background: #FAFBF9;
+      z-index: 100;
+      display: none;
+      align-items: flex-start;
+    }
+
+    .cart-overlay.active {
+      display: flex;
+    }
+
+    .cart-modal {
+       width: 995px;
+       height: 450px;
+       background: #FAFBF9;
+       border-radius: 20px;
+       position: relative;
+       padding: 30px;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       margin-top: -50px;
+      }
+
+      .cart-title {
+        font-family: 'Fraunces', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #006664;
+        text-align: center;
+        margin-bottom: 20px;
+        align-self: flex-start;
+      }
+
+      .cart-items {
+        width: 100%;
+        max-height: 250px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+      }
+
+      .cart-item {
+        display: flex;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #E8ECEF;
+      }
+
+      .cart-item:last-child {
+        border-bottom: none;
+      }
+
+      .cart-item-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+
+      .cart-item-info {
+        flex: 1;
+      }   
+      
+      .cart-item-info h3 {
+        font-size: 16px;
+        color: #006664;
+        margin-bottom: 5px;
+      }
+
+      .cart-item-info p {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+      .cart-item-price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #006664;
+      }
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .quantity-controls button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #E8ECEF;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .recommendations {
+      width: 120px;
+      text-align: center;
+    }
+
+    .recommendations p {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .cart-footer {
+      border-top: 1px solid #E8ECEF;
+      padding-top: 20px;
+    }
+    
+    .cart-totals {
+      margin-bottom: 20px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .total-row.final {
+      font-weight: bold;
+      font-size: 18px;
+      color: #006664;
+    }
+    
+    .cart-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .checkout-btn {
+      flex: 1;
+      background: #006664;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .continue-btn {
+      flex: 1;
+      background: #E8ECEF;
+      color: #666;
+      border: none;
+      border-radius: 25px;
+      padding: 15px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -494,7 +837,6 @@
       <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/BG.webp?raw=true" alt="Background">
     </div>
 
-    
     <div class="top-navbar">
       <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt="Kräuterparadies" class="nav-logo-img">
     </div>
@@ -502,53 +844,111 @@
     <div class="chat-container">
       <div id="chat-history" class="chat-history"></div>
 
+      <!-- Sign Up/Sign In Modal -->
       <div id="modal-overlay" class="modal-overlay">
         <div class="signup-modal">
           <button id="modal-close" class="modal-close">&times;</button>
           <h2 class="signup-title">Sign Up to<br>Gewürz Guru</h2>
           <form class="signup-form"> 
-            <div class="form-group">
+            <div class="form-group" id="first-name-group">
               <label class="form-label">First name</label>
               <input type="text" class="form-input" placeholder="" />
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="last-name-group">
               <label class="form-label">Last name</label>
               <input type="text" class="form-input" placeholder="" />
             </div>
 
             <div class="form-group">
-            <label class="form-label">Email address</label>
-            <input type="email" class="form-input" placeholder="" />
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-input" placeholder="" />
             </div>
           
-          <div class="form-group">
-            <div class="password-group">
-              <label class="form-label">Password</label>
-              <button type="button" class="password-toggle">Hide</button>
-            </div>
+            <div class="form-group">
+              <div class="password-group">
+                <label class="form-label">Password</label>
+                <button type="button" class="password-toggle">Hide</button>
+              </div>
               <input type="password" class="form-input" placeholder="" />
-          </div>
+            </div>
 
-          <div class="checkbox-group">
-            <input type="checkbox" id="terms" checked />
-            <label for="terms">Agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
-          </div>
+            <div class="checkbox-group" id="terms-group">
+              <input type="checkbox" id="terms" checked />
+              <label for="terms">Agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
+            </div>
 
-          <div class="checkbox-group">
-            <input type="checkbox" id="newsletter" checked />
-            <label for="newsletter">Subscribe to our monthly newsletter</label>
-          </div>
+            <div class="checkbox-group" id="newsletter-group">
+              <input type="checkbox" id="newsletter" checked />
+              <label for="newsletter">Subscribe to our monthly newsletter</label>
+            </div>
 
-          <button type="submit" class="signup-button">Log In</button>
+            <button type="submit" class="signup-button">Log In</button>
 
-          <div class="signin-link">
-            Already have an account? <a href="#">Sign in</a>
-          </div>
+            <div class="signin-link">
+              Already have an account? <a href="#" id="toggle-mode">Sign in</a>
+            </div>
           </form>
         </div>  
       </div>
+
+      <div id="wishlist-overlay" class="wishlist-overlay">
+        <div class="wishlist-modal">
+          <div class="modal-header">
+            <h2 class="wishlist-title">Wishlist</h2>
+            <button id="wishlist-close" class="modal-close">&times;</button>
+          </div>
+          <div id="wishlist-grid" class="wishlist-grid">
+            <!-- Wishlist items will be populated by JavaScript -->
+          </div>
+        </div>  
+      </div>
+
+      <!-- Cart Modal -->
+      <div id="cart-overlay" class="cart-overlay">
+        <div class="cart-modal">
+          <div class="modal-header">
+            <h2 class="cart-title">Warenkorb</h2>
+            <button id="cart-close" class="modal-close">&times;</button>
+          </div>
       
+          <div id="cart-content">
+            <div class="cart-items">
+              <!-- Товари корзини -->
+              <div class="cart-item">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true" class="cart-item-image">
+                <div class="cart-item-info">
+                  <h3>Blütenmischung blau</h3>
+                  <p>Menge: 100 Gramm</p>
+                  <p class="cart-item-price">16,95 €</p>
+                  <div class="quantity-controls">
+                    <button>-</button>
+                    <span>01</span>
+                    <button>+</button>
+                    <button class="remove-btn">🗑</button>
+                  </div>
+                </div>
+                <div class="recommendations">
+                  <p>Recommended for you</p>
+                  <!-- 3 маленькі картинки рекомендацій -->
+                </div>
+              </div>
+            </div>
+      
+            <div class="cart-footer">
+              <p class="cart-total">
+                <span>Insgesamt</span>
+                <span>25,85 €</span>
+              </p>
+              <div class="cart-actions">
+                <button class="checkout-btn">Zur Kasse</button>
+                <button class="continue-btn">Weiter Einkaufen</button>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+       
       <div class="chat-input-area">
         <div class="input-container">
           <input id="user-input" type="text" class="chat-input" placeholder="Was hilft gegen Stress?" />
@@ -560,14 +960,14 @@
 
             <div class="icon-group">
               <button class="icon-button" data-tooltip="Recomendation">
-                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Recomend.webp?raw=true" alt="recomendation" class="icon-img">
               </button>
 
-              <button class="icon-button" data-tooltip="Wishlist">
-                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+              <button id="wishlist-button" class="icon-button" data-tooltip="Wishlist">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Favorite.webp?raw=true" alt="wishlist" class="icon-img">
               </button>
-              <button class="icon-button" data-tooltip="Cart">
-                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+              <button id="cart-button" class="icon-button" data-tooltip="Cart">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Curt.webp?raw=true" alt="cart" class="icon-img">
               </button>
               <button id="send-button" class="send-button" title="Absenden">
                 <i class="fas fa-arrow-up"></i>
@@ -579,16 +979,19 @@
     </div>
   </div>
 
-
-  
-  <!-- Скрипт -->
   <script>
     const chatHistory = document.getElementById("chat-history");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
     const signinButton = document.getElementById("signin-button");
+    const wishlistButton = document.getElementById("wishlist-button");
     const modalOverlay = document.getElementById("modal-overlay");
+    const wishlistOverlay = document.getElementById("wishlist-overlay");
     const modalClose = document.getElementById("modal-close");
+    const wishlistClose = document.getElementById("wishlist-close");
+    const cartButton = document.getElementById("cart-button");
+    const cartOverlay = document.getElementById("cart-overlay");
+    const cartClose = document.getElementById("cart-close");
 
     const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";
     const askUrl = "https://n8n.beinf.ai/webhook/5af2b924-aedb-4d7f-828a-3858c9b1f9f6";
@@ -597,8 +1000,113 @@
     localStorage.setItem("sessionId", sessionId);
 
     let isWaitingForResponse = false;
+    let isSignInMode = false;
 
-    // Modal functionality
+    // Simulated wishlist data from backend
+    const wishlistItems = [
+      {
+        id: 1,
+        name: "Asia Wokgewürz",
+        weight: "100g",
+        price: "3,95 €",
+        rating: 4.2,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 2,
+        name: "Bayrisch Habibi",
+        weight: "100g",
+        price: "4,95 €",
+        rating: 4.5,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2082.webp?raw=true"
+      },
+      {
+        id: 3,
+        name: "Blütenmischung blau",
+        weight: "100g",
+        price: "16,95 €",
+        rating: 4.8,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true"
+      },
+      {
+        id: 4,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 5,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 6,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 7,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 8,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      },
+      {
+        id: 9,
+        name: "Blütenmischung rot",
+        weight: "100g",
+        price: "14,45 €",
+        rating: 5.0,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2081.webp?raw=true"
+      }
+    ];
+
+    const cartItems = [
+      {
+        id: 1,
+        name: "Blütenmischung blau",
+        weight: "100 Gramm",
+        price: "16,95 €",
+        quantity: 1,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true"
+      },
+      {
+        id: 2,
+        name: "Blütenmischung blau", 
+        weight: "100 Gramm",
+        price: "16,95 €",
+        quantity: 1,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true"
+      },
+      {
+        id: 3,
+        name: "Blütenmischung blau",
+        weight: "100 Gramm", 
+        price: "16,95 €",
+        quantity: 1,
+        image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true"
+      }
+    ];
+
+
+    // Sign In Modal functionality
     signinButton.addEventListener("click", () => {
       signinButton.classList.toggle("active");
       modalOverlay.classList.add("active");
@@ -615,6 +1123,144 @@
         signinButton.classList.remove("active");
       }
     });
+
+    // Wishlist functionality
+    wishlistButton.addEventListener("click", () => {
+      wishlistButton.classList.toggle("active");
+      wishlistOverlay.classList.add("active");
+      populateWishlist();
+    });
+
+    wishlistClose.addEventListener("click", () => {
+      wishlistOverlay.classList.remove("active");
+      wishlistButton.classList.remove("active");
+    });
+
+    wishlistOverlay.addEventListener("click", (e) => {
+      if (e.target === wishlistOverlay) {
+        wishlistOverlay.classList.remove("active");
+        wishlistButton.classList.remove("active");
+      }
+    });
+
+    // Cart functionality
+    cartButton.addEventListener("click", () => {
+      cartButton.classList.toggle("active");
+      cartOverlay.classList.add("active");
+    });
+
+    cartClose.addEventListener("click", () => {
+      cartOverlay.classList.remove("active");
+      cartButton.classList.remove("active");
+    });
+
+    cartOverlay.addEventListener("click", (e) => {
+      if (e.target === cartOverlay) {
+        cartOverlay.classList.remove("active");
+        cartButton.classList.remove("active");
+      }
+    });
+
+    function populateWishlist() {
+      const wishlistGrid = document.getElementById("wishlist-grid");
+      wishlistGrid.innerHTML = "";
+
+      wishlistItems.forEach(item => {
+        const productCard = createProductCard(item);
+        wishlistGrid.appendChild(productCard);
+      });
+    }
+
+    function createProductCard(item) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <div style="position: relative;">
+          <img src="${item.image}" alt="${item.name}" class="product-image">
+          <div class="product-actions">
+            <button class="action-btn heart-btn" onclick="removeFromWishlist(${item.id})">
+              <i class="fas fa-heart"></i>
+            </button>
+            <button class="action-btn cart-btn" onclick="addToCart(${item.id})">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">${item.name}</div>
+          <div class="product-weight">${item.weight}</div>
+          <div class="product-price">${item.price}</div>
+          <div class="product-rating">
+            <span class="star">★</span>
+            <span class="rating-number">${item.rating}</span>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    function removeFromWishlist(itemId) {
+      const index = wishlistItems.findIndex(item => item.id === itemId);
+      if (index > -1) {
+        wishlistItems.splice(index, 1);
+        populateWishlist();
+      }
+    }
+
+    function addToCart(itemId) {
+      const item = wishlistItems.find(item => item.id === itemId);
+      if (item) {
+        alert(`${item.name} added to cart!`);
+        // Here you would normally send to backend API
+      }
+    }
+
+    // Toggle between Sign In and Sign Up modes
+    const signupTitle = document.querySelector(".signup-title");
+    const submitButton = document.querySelector(".signup-button");
+    const signinLink = document.querySelector(".signin-link");
+    const firstNameGroup = document.getElementById("first-name-group");
+    const lastNameGroup = document.getElementById("last-name-group");
+    const termsGroup = document.getElementById("terms-group");
+    const newsletterGroup = document.getElementById("newsletter-group");
+
+    function handleToggleMode(e) {
+      e.preventDefault();
+      
+      if (isSignInMode) {
+        // Switch to Sign Up mode
+        signupTitle.innerHTML = "Sign Up to<br>Gewürz Guru";
+        submitButton.textContent = "Log In";
+        signinLink.innerHTML = 'Already have an account? <a href="#" id="toggle-mode">Sign in</a>';
+        
+        firstNameGroup.classList.remove("hidden");
+        lastNameGroup.classList.remove("hidden");
+        termsGroup.classList.remove("hidden");
+        newsletterGroup.classList.remove("hidden");
+        
+        isSignInMode = false;
+      } else {
+        // Switch to Sign In mode
+        signupTitle.innerHTML = "Sign In to<br>Gewürz Guru";
+        submitButton.textContent = "Sign In";
+        signinLink.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-mode">Sign up</a>';
+        
+        firstNameGroup.classList.add("hidden");
+        lastNameGroup.classList.add("hidden");
+        termsGroup.classList.add("hidden");
+        newsletterGroup.classList.add("hidden");
+        
+        isSignInMode = true;
+      }
+      
+      // Re-attach event listener to new link
+      const newToggleLink = document.getElementById("toggle-mode");
+      newToggleLink.addEventListener("click", handleToggleMode);
+    }
+
+    // Initial event listener
+    const toggleModeLink = document.getElementById("toggle-mode");
+    toggleModeLink.addEventListener("click", handleToggleMode);
 
     // Password toggle
     const passwordToggle = document.querySelector(".password-toggle");
@@ -641,7 +1287,6 @@
       const container = document.createElement("div");
       container.classList.add("message-container", sender === "user" ? "user" : "bot");
 
-      // Додаємо аватар тільки для бота
       if (sender === "bot") {
         const avatar = document.createElement("img");
         avatar.classList.add("message-avatar");
@@ -653,7 +1298,6 @@
       const bubble = document.createElement("div");
       bubble.classList.add("message-bubble");
       
-      // Обробляємо markdown тільки для повідомлень бота
       if (sender === "bot") {
         const processedMessage = parseMarkdown(message);
         bubble.innerHTML = processedMessage;
@@ -664,7 +1308,6 @@
       container.appendChild(bubble);
       chatHistory.appendChild(container);
       
-      // Плавна прокрутка до низу
       setTimeout(() => {
         chatHistory.scrollTop = chatHistory.scrollHeight;
       }, 100);
@@ -752,7 +1395,6 @@
       }
     });
 
-    // Ініціалізація при завантаженні
     window.onload = function() {
       loadHistory();
       userInput.focus();
