@@ -338,19 +338,6 @@
       display: flex;
     }
 
-    .signup-modal {
-      width: 995px;
-      height: 450px;
-      background: #FAFBF9;
-      border-radius: 20px;
-      position: relative;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: -50px;
-    }
-
     .modal-header {
       width: 100%;
       display: flex;
@@ -393,7 +380,7 @@
       max-width: 400px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px;
     }
 
     .form-group {
@@ -828,6 +815,31 @@
       cursor: pointer;
     }
 
+    .signup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .signup-title {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: #006664;
+      margin: 0;
+    }
+    
+    .signup-header .modal-close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #006664;
+    }
+
+
   </style>
 </head>
 <body>
@@ -847,8 +859,11 @@
       <!-- Sign Up/Sign In Modal -->
       <div id="modal-overlay" class="modal-overlay">
         <div class="signup-modal">
-          <button id="modal-close" class="modal-close">&times;</button>
-          <h2 class="signup-title">Sign Up to<br>Gewürz Guru</h2>
+          <div class="signup-header">
+            <h2 class="signup-title">Sign Up to<br>Gewürz Guru</h2>
+            <button id="modal-close" class="modal-close">&times;</button>
+          </div>
+
           <form class="signup-form"> 
             <div class="form-group" id="first-name-group">
               <label class="form-label">First name</label>
@@ -913,32 +928,11 @@
           </div>
       
           <div id="cart-content">
-            <div class="cart-items">
-              <!-- Товари корзини -->
-              <div class="cart-item">
-                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true" class="cart-item-image">
-                <div class="cart-item-info">
-                  <h3>Blütenmischung blau</h3>
-                  <p>Menge: 100 Gramm</p>
-                  <p class="cart-item-price">16,95 €</p>
-                  <div class="quantity-controls">
-                    <button>-</button>
-                    <span>01</span>
-                    <button>+</button>
-                    <button class="remove-btn">🗑</button>
-                  </div>
-                </div>
-                <div class="recommendations">
-                  <p>Recommended for you</p>
-                  <!-- 3 маленькі картинки рекомендацій -->
-                </div>
-              </div>
-            </div>
-      
+            <div class="cart-items"></div>
             <div class="cart-footer">
               <p class="cart-total">
                 <span>Insgesamt</span>
-                <span>25,85 €</span>
+                <span id="cart-total-price">0 €</span>
               </p>
               <div class="cart-actions">
                 <button class="checkout-btn">Zur Kasse</button>
@@ -1104,6 +1098,51 @@
         image: "https://github.com/MariiaBakhmat/GewGur/blob/main/Rectangle%2083.webp?raw=true"
       }
     ];
+
+    const cartContainer = document.querySelector(".cart-items");
+    const cartTotalPrice = document.getElementById("cart-total-price");
+
+    function renderCart() {
+      cartContainer.innerHTML = "";
+      let total = 0;
+
+      cartItems.forEach(item => {
+        const priceNum = parseFloat(item.price.replace(",", ".").replace(" €", ""));
+        total += priceNum * item.quantity;
+
+        const itemHTML = `
+      <div class="cart-item">
+        <img src="${item.image}" class="cart-item-image">
+        <div class="cart-item-info">
+          <h3>${item.name}</h3>
+          <p>Menge: ${item.weight}</p>
+          <p class="cart-item-price">${item.price}</p>
+          <div class="quantity-controls">
+            <button>-</button>
+            <span>${item.quantity.toString().padStart(2, "0")}</span>
+            <button>+</button>
+            <button class="remove-btn">🗑</button>
+          </div>
+        </div>
+        <div class="recommendations">
+          <p>Recommended for you</p>
+          <div class="recommendation-cards">
+            <div class="rec-card"><img src="https://via.placeholder.com/50"><p>Asia Wokgewürz<br>3,95 €</p></div>
+            <div class="rec-card"><img src="https://via.placeholder.com/50"><p>Bayrisch Habibi<br>4,95 €</p></div>
+            <div class="rec-card"><img src="https://via.placeholder.com/50"><p>Blütenmischung rot<br>14,45 €</p></div>
+          </div>
+        </div>
+      </div>
+    `;
+    cartContainer.insertAdjacentHTML("beforeend", itemHTML);
+  });
+
+  cartTotalPrice.textContent = total.toFixed(2).replace(".", ",") + " €";
+}
+renderCart();
+
+
+
 
 
     // Sign In Modal functionality
