@@ -14,15 +14,29 @@
       box-sizing: border-box;
     }
 
-    body {
+    body, html {
+      height: 100%;
       font-family: 'Lato', sans-serif;
-      background: url("https://github.com/MariiaBakhmat/GewGur/blob/main/BG.webp?raw=true") no-repeat center center;
-      background-size: cover;
-      background-attachment: scroll;
-      color: ##FEFEFE;
+      color: #FEFEFE;
+    }
+
+    /* Фоновое изображение */
+    .bg-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-width: 100vw;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     /* Верхня панель з лого */
@@ -35,6 +49,11 @@
       justify-content: center;
       align-items: center;
       padding: 0 40px;
+      position: fixed;
+      top: 0; 
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 4px 4px rgba(0,0,0,0.15);
     }
 
     .nav-logo-img {
@@ -42,29 +61,55 @@
       width: auto;
       object-fit: contain;
     }
+    
+    :root {
+        --nav-h: 120px;
+    }
+
+    /* Основний контейнер */
+    .main-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
     /* Контейнер чату */
     .chat-container {
       flex: 1;
-      max-width: 1000px;
-      margin: 0 auto;
+      max-width: 800px;
+      margin: 190px auto 0 auto;
       width: 100%;
       display: flex;
       flex-direction: column;
       background: transparent;
+      min-height: calc(100vh - 190px);
+      position: relative;
     }
 
-    /* Історія чату */
     .chat-history {
       flex: 1;
-      padding: 20px 30px;
+      padding: 0px 30px 20px 30px;
       overflow-y: auto;
       background-color: transparent;
-      min-height: 400px;
+      min-height: 0;
     }
 
     .chat-history::-webkit-scrollbar {
-      display: none;
+      width: 6px;
+    }
+
+    .chat-history::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .chat-history::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+    }
+
+    .chat-history::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
 
     /* Повідомлення */
@@ -90,158 +135,450 @@
     }
 
     .message-bubble {
-      max-width: 75%;
-      padding: 0;
-      border-radius: 0;
+      max-width: 630px;
+      padding: 12px 18px;
+      border-radius: 20px;
       line-height: 1.5;
-      box-shadow: none;
       white-space: pre-wrap;
       word-break: break-word;
-      background: none !important;
     }
 
     .message-container.user .message-bubble {
-      background-color: transparent;
-      color: #000000;
-      border-bottom-right-radius: 0;
+      background-color: #006664;
+      color: #FFFFFF;
+      border-bottom-right-radius: 6px;
     }
 
     .message-container.bot .message-bubble {
-      background-color: #transparent;
+      background-color: transparent;
       color: #000000;
-      border-bottom-left-radius: 0;
+      border-bottom-left-radius: 6px;
     }
 
     .message-bubble a {
-      color: #FFD700;
+      color: #006664;
       text-decoration: underline;
       font-weight: 500;
     }
 
     .message-bubble a:hover {
-      color: #FFF8DC;
+      color: #004240;
     }
 
     .message-avatar {
       width: 54px;
       height: 54px;
       margin-right: 10px;
+      border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
     }
 
     .loading-bubble {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #ffffff88;
+      background-color: transparent;
+      color: #666666;
       font-style: italic;
-      padding: 8px 16px;
+      padding: 12px 18px;
       border-radius: 20px;
       font-size: 14px;
-      box-shadow: none;
+      border-bottom-left-radius: 6px;
     }
 
     /* Поле вводу */
     .chat-input-area {
       padding: 12px 20px;
-      border-top: 1px solid ##FEFEFE;
       background: transparent;
+      flex-shrink: 0;
       display: flex;
-      gap: 20px;
-      align-items: center;
-      height: 64px;
-      box-sizing: border-box;
+      justify-content: center;
+    }
+
+    .input-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      background: #FEFEFE;
+      border: 2px solid #E8ECEF;
+      border-radius: 16px;
+      padding: 12px 60px 12px 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 5;
     }
 
     .chat-input {
-      flex: 1;
-      background: #EFEFEFE;
-      border: 2px solid #E8ECEF;
-      border-radius: 40px;
-      padding: 12px 24px;
-      color: #004240;
-      font-size: 1rem;
+      width: 100%;
+      border: none;
       outline: none;
+      font-size: 1rem;
+      color: #004240;
     }
 
     .chat-input::placeholder {
-      color: #004240;
+      color: #000000;
       opacity: 0.6;
     }
 
+    .icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      position: relative;
+      transition: background-color 0.2s ease;
+    }
+
+    .icon-button.active {
+      background-color: #006664;
+    }
+
+    .icons-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .icon-img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      display: block;
+      cursor: pointer;
+      transition: filter 0.2s ease;
+    }
+
+    .icon-button:hover .icon-img {
+      opacity: 0.7;
+    }
+
+    .icon-button.active .icon-img {
+      filter: brightness(0) invert(1);
+    }
+
+    .icon-button::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .icon-button:hover::after {
+      opacity: 1;
+    }
+    
     .send-button {
-      background: #C09F58;
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      background: #006663;
       border: none;
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      font-size: 1.3rem;
-      color: #F2EBDE;
-      transition: opacity 0.2s ease;
+      color: #FFFFFF;
+      font-size: 1.2rem;
     }
 
     .send-button:hover {
-      opacity: 0.8;
+      background: #006663; 
     }
 
     .send-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+      transform: none;
     }
 
-    /* Мобільна адаптація */
-    @media(max-width: 768px) {
-      .top-navbar {
-        height: 80px;
-        padding: 0 20px;
-      }
-      
-      .nav-logo-img {
-        height: 40px;
-      }
-      
-      .chat-history {
-        padding: 15px 20px;
-        min-height: 300px;
-      }
-      
-      .chat-input-area {
-        padding: 15px 20px;
-      }
-      
-      .message-bubble {
-        max-width: 85%;
-      }
+    /* Modal Overlay */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 120px;
+      background: #FAFBF9;
+      z-index: 100;
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+   
+    .signup-modal {
+      width: 995px;
+      height: 450px;
+      background: #FAFBF9;
+      border-radius: 20px;
+      position: relative;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -50px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #666;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-close:hover {
+      color: #000;
+    }
+
+    .signup-title {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: #006664;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .signup-form {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-label {
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .form-input {
+      padding: 12px 16px;
+      border: 1px solid #E8ECEF;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #333;
+      background: #FEFEFE;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #006664;
+    }
+
+    .password-group {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-top: 2px;
+    }
+
+    .checkbox-group label {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .checkbox-group a {
+      color: #006664;
+      text-decoration: underline;
+    }
+
+    .signup-button {
+      background: #006664;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 25px;
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .signup-button:hover {
+      background: #004240;
+    }
+
+    .signin-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .signin-link a {
+      color: #006664;
+      text-decoration: underline;
+    }
+
+    .bottom-question {
+      margin-top: auto;
+      text-align: center;
+      font-size: 14px;
+      color: #999;
+      padding: 20px 0;
     }
   </style>
 </head>
 <body>
-  <!-- Верхня панель з лого -->
-  <div class="top-navbar">
-    <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt="Kräuterparadies" class="nav-logo-img">
-  </div>
+  <div class="main-container">
+   
+    <div class="bg-wrapper">
+      <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/BG.webp?raw=true" alt="Background">
+    </div>
 
-  <!-- Контейнер чату -->
-  <div class="chat-container">
-    <!-- Історія чату -->
-    <div id="chat-history" class="chat-history"></div>
     
-    <!-- Поле вводу -->
-    <div class="chat-input-area">
-      <input id="user-input" type="text" class="chat-input" placeholder="Schreib eine Nachricht..." />
-      <button id="send-button" class="send-button" title="Absenden">
-        <i class="fas fa-paper-plane"></i>
-      </button>
+    <div class="top-navbar">
+      <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Kraeuterparadis.webp?raw=true" alt="Kräuterparadies" class="nav-logo-img">
+    </div>
+
+    <div class="chat-container">
+      <div id="chat-history" class="chat-history"></div>
+
+      <div id="modal-overlay" class="modal-overlay">
+        <div class="signup-modal">
+          <button id="modal-close" class="modal-close">&times;</button>
+          <h2 class="signup-title">Sign Up to<br>Gewürz Guru</h2>
+          <form class="signup-form"> 
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input type="text" class="form-input" placeholder="" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Last name</label>
+              <input type="text" class="form-input" placeholder="" />
+            </div>
+
+            <div class="form-group">
+            <label class="form-label">Email address</label>
+            <input type="email" class="form-input" placeholder="" />
+            </div>
+          
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="password-group">
+              <input type="password" class="form-input" placeholder="" />
+              <button type="button" class="password-toggle">Hide</button>
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" checked />
+            <label for="terms">Agree to our <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></label>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="newsletter" checked />
+            <label for="newsletter">Subscribe to our monthly newsletter</label>
+          </div>
+
+          <button type="submit" class="signup-button">Log In</button>
+
+          <div class="signin-link">
+            Already have an account? <a href="#">Sign in</a>
+          </div>
+          </form>
+        </div>  
+      </div>
+      
+      <div class="chat-input-area">
+        <div class="input-container">
+          <input id="user-input" type="text" class="chat-input" placeholder="Was hilft gegen Stress?" />
+          <div class="icons-row">
+
+            <button id="signin-button" class="icon-button" data-tooltip="Sign in">
+              <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/Account.webp?raw=true" alt="sign in" class="icon-img">
+            </button>
+
+            <div class="icon-group">
+              <button class="icon-button" data-tooltip="Recomendation">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+              </button>
+
+              <button class="icon-button" data-tooltip="Wishlist">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+              </button>
+              <button class="icon-button" data-tooltip="Cart">
+                <img src="https://github.com/MariiaBakhmat/GewGur/blob/main/mdi_cart.webp?raw=true" alt="cart" class="icon-img">
+              </button>
+              <button id="send-button" class="send-button" title="Absenden">
+                <i class="fas fa-arrow-up"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
+
+  
+  <!-- Скрипт -->
   <script>
     const chatHistory = document.getElementById("chat-history");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
+    const signinButton = document.getElementById("signin-button");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const modalClose = document.getElementById("modal-close");
 
     const historyUrl = "https://n8n.beinf.ai/webhook/da1ae5d0-bfe1-4835-bb72-07f0b869ffc0";
     const askUrl = "https://n8n.beinf.ai/webhook/5af2b924-aedb-4d7f-828a-3858c9b1f9f6";
@@ -250,6 +587,38 @@
     localStorage.setItem("sessionId", sessionId);
 
     let isWaitingForResponse = false;
+
+    // Modal functionality
+    signinButton.addEventListener("click", () => {
+      signinButton.classList.toggle("active");
+      modalOverlay.classList.add("active");
+    });
+
+    modalClose.addEventListener("click", () => {
+      modalOverlay.classList.remove("active");
+      signinButton.classList.remove("active");
+    });
+
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove("active");
+        signinButton.classList.remove("active");
+      }
+    });
+
+    // Password toggle
+    const passwordToggle = document.querySelector(".password-toggle");
+    const passwordInput = document.querySelector("input[type='password']");
+    
+    passwordToggle.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordToggle.textContent = "Hide";
+      } else {
+        passwordInput.type = "password";
+        passwordToggle.textContent = "Show";
+      }
+    });
 
     // Функція обробки markdown
     function parseMarkdown(text) {
@@ -284,7 +653,11 @@
 
       container.appendChild(bubble);
       chatHistory.appendChild(container);
-      chatHistory.scrollTop = chatHistory.scrollHeight;
+      
+      // Плавна прокрутка до низу
+      setTimeout(() => {
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }, 100);
     }
 
     function showAgentLoaderMessage() {
@@ -293,12 +666,12 @@
 
       const avatar = document.createElement("img");
       avatar.classList.add("message-avatar");
-      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.png?raw=true";
+      avatar.src = "https://github.com/MariiaBakhmat/GewGur/blob/main/Guru.webp?raw=true";
       avatar.alt = "Bot Avatar";
 
       const bubble = document.createElement("div");
       bubble.classList.add("message-bubble", "loading-bubble");
-      bubble.textContent = ".....";
+      bubble.textContent = "...";
 
       container.appendChild(avatar);
       container.appendChild(bubble);
@@ -319,11 +692,11 @@
         if (Array.isArray(data.history) && data.history.length > 0) {
           data.history.forEach(({ sender, text }) => appendMessage(sender, text));
         } else {
-          appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+          appendMessage("bot", "Hey! Ich bin der Gewürz Guru — dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
         }
       } catch (e) {
         console.error("memory error", e);
-        appendMessage("bot", "Hey! Ich bin der Gewürz Guru – dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
+        appendMessage("bot", "Hey! Ich bin der Gewürz Guru — dein Helfer beim Einkaufen. Ich bin noch neu hier, aber ich kann dir schon jetzt helfen, den richtigen Tee oder das perfekte Gewürz zu finden!");
       }
     }
 
